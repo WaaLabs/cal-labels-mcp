@@ -31,7 +31,7 @@ export default function Privacy() {
         Access can be revoked at any time from the Google Account &rarr; Security &rarr; Third-party connections page.
       </p>
       <h2>Contact</h2>
-      <p>heycarty@gmail.com</p>
+      <p>matt@cartycodes.com</p>
     </main>
   );
 }
