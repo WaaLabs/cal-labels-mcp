@@ -3,11 +3,12 @@
 import { createMcpHandler, withMcpAuth } from "mcp-handler";
 import { SCOPE } from "@/lib/oauth";
 import { unseal } from "@/lib/seal";
+import { SERVER_INSTRUCTIONS } from "@/lib/skill";
 import { registerTools } from "@/lib/tools";
 
 export const maxDuration = 60;
 
-const mcp = createMcpHandler(registerTools, { serverInfo: { name: "cal-labels", version: "0.4.0" } }, {
+const mcp = createMcpHandler(registerTools, { serverInfo: { name: "cal-labels", version: "0.5.0" }, instructions: SERVER_INSTRUCTIONS }, {
   basePath: "/api",
   maxDuration: 60,
   disableSse: true,

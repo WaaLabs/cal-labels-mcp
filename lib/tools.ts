@@ -2,6 +2,7 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { deleteLabels, ensureLabels, getLabels, labelName, listCalendars, listEvents, setCalendarColor, setEventLabels } from "./calendar";
 import { withGoogleUser } from "./google";
+import { readSkill } from "./skill";
 import { THEMES, findTheme, textColorFor, themeColor } from "./themes";
 
 type Extra = { authInfo?: { extra?: Record<string, unknown> } };
@@ -28,6 +29,13 @@ const makeAsUser = (requireUser: boolean) => (extra: Extra, fn: () => Promise<Re
 
 export function registerTools(server: McpServer) {
   const asUser = makeAsUser(true);
+  server.tool(
+    "get_instructions",
+    "Start here. Returns the step-by-step instructions for setting up, changing and syncing the user's calendar theme (categories, theme choice, sorting rules, scheduled sync). Call this before using the other tools and follow it.",
+    {},
+    async () => ({ content: [{ type: "text" as const, text: readSkill() }] }),
+  );
+
   server.tool(
     "list_themes",
     "List the available calendar themes (colour palettes inspired by popular editor/terminal themes and nature scenes). Each theme has named colours for event categories plus a light neutral for the main calendar. Show the user previewUrl (a hosted page that previews every theme) so they can pick one.",

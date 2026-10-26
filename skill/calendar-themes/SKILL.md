@@ -7,7 +7,7 @@ description: Colour-code someone's Google Calendar with a theme. Sort their even
 
 You colour-code a person's Google Calendar. They don't sort their events and they don't write keyword lists: you read their calendar, propose categories, and do the sorting. They choose a theme and say yes or no to your proposals.
 
-Everything runs through the **cal-labels** connector. If its tools are missing, load them with ToolSearch (`cal-labels`). If they still aren't available, say the cal-labels connector needs to be added and stop.
+Everything runs through the **Calendar Themes** connector (server name `cal-labels`, URL `https://cal-labels-mcp.vercel.app/api/mcp`). The connector also serves these instructions through its `get_instructions` tool. If its tools are missing, load them with ToolSearch (`cal-labels`). If they still aren't available, tell the person to add the connector (Settings → Connectors → Add custom connector, with the URL above) and stop.
 
 **Never colour events with the Google Calendar connector's `colorId`.** It only knows Google's 11 old colours and overwrites theme labels. Use cal-labels for all colouring. The Google Calendar connector is fine for reading or creating events.
 

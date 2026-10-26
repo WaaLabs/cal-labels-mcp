@@ -16,24 +16,15 @@ It uses Google Calendar's newer event colours (any hex), which the standard Goog
 
 Connect it and sign in with Google. You'll see Google's "this app isn't verified" screen; choose **Advanced → Go to cal-labels** and allow calendar access. You only ever give access to your own calendar.
 
-**2. Paste this into a new chat:**
+**2. Start a new chat and say:**
 
 ```text
-Set up Calendar Themes for my Google Calendar.
-
-First, read the skill instructions at
-https://raw.githubusercontent.com/WaaLabs/cal-labels-mcp/main/skill/calendar-themes/SKILL.md
-and follow them exactly. If you can save skills, offer to save it as a skill
-called "calendar-themes" so I can reuse it.
-
-Use the Calendar Themes connector (its tools are list_themes, apply_theme,
-list_events, set_event_labels and so on). If the tools aren't available, tell me
-to add the connector first and stop.
-
-Then walk me through it: read my calendar, suggest categories, show me the
-themes, apply the one I pick, colour this week and next, and offer to set up a
-scheduled task to keep new events coloured.
+Set up Calendar Themes on my Google Calendar.
 ```
+
+The connector gives your AI its own instructions (`get_instructions`), so there's nothing else to install. It will read your calendar, suggest categories, show you the themes, apply the one you pick, colour this week and next, and offer to keep new events coloured with a scheduled task.
+
+The instructions are also in this repo at [`skill/calendar-themes/SKILL.md`](skill/calendar-themes/SKILL.md) (served live at [/skill.md](https://cal-labels-mcp.vercel.app/skill.md)). If your app supports skills, you can save it as one.
 
 That's it. To change things later, just ask: "try the Gruvbox theme", "make Exercise a different colour", "add a category for my side project", "start over".
 
@@ -47,7 +38,7 @@ That's it. To change things later, just ask: "try the Gruvbox theme", "make Exer
 
 | Path | What |
 |---|---|
-| `skill/calendar-themes/SKILL.md` | The instructions the AI follows (setup, sorting rules, changes) |
+| `skill/calendar-themes/SKILL.md` | The instructions the AI follows (setup, sorting rules, changes), served by `get_instructions` and `/skill.md` |
 | `lib/themes.ts` | Theme palettes. Add a theme here and it appears in the tool and the preview page |
 | `lib/tools.ts` | MCP tools |
 | `lib/oauth.ts`, `app/oauth/*`, `app/.well-known/*` | Stateless OAuth (dynamic client registration + PKCE) in front of Google |
@@ -57,6 +48,7 @@ That's it. To change things later, just ask: "try the Gruvbox theme", "make Exer
 
 | Tool | What it does |
 |---|---|
+| `get_instructions` | The setup and sync instructions (the skill), so the AI knows what to do |
 | `list_themes` | Theme palettes plus the preview page URL |
 | `get_current_theme` | Which theme a calendar uses, read from its label colours |
 | `apply_theme` | One label per category in theme colours; main calendar set to the theme's neutral |
