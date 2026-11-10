@@ -156,7 +156,7 @@ export function registerTools(server: McpServer) {
 
   server.tool(
     "set_event_labels",
-    'Set the colour label on one or more events. Only the label changes; no notifications are sent. label can be a custom label name, a default colour name (e.g. "Eucalyptus"), a hex, a label ID, or "" to clear back to the calendar default colour.',
+    'Set the colour label on one or more events. Only the label changes; no notifications are sent. label can be a custom label name, a default colour name (e.g. "Eucalyptus"), a hex, a label ID, or "" to clear back to the calendar default colour. eventId can be a single event, an instance, or a recurring series ID (the recurringEventId from list_events) to label every instance that doesn\'t have its own label.',
     {
       calendarId,
       changes: z

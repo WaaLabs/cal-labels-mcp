@@ -26,7 +26,7 @@ Everything runs through the **Calendar Themes** connector (server name `cal-labe
 | `list_themes` | Themes and `previewUrl` |
 | `list_events` | Events in a range with their current label (recurring events come expanded) |
 | `apply_theme` | One label per category in theme colours; sets the main calendar to the neutral (the default category's colour) |
-| `set_event_labels` | Label or clear (`""`) events, up to 50 per call, no notifications |
+| `set_event_labels` | Label or clear (`""`) events or whole recurring series, up to 50 per call, no notifications |
 | `list_calendars`, `set_calendar_color` | Other calendars' colours (per person) |
 | `delete_labels` | Remove custom labels by name (dropped categories, resets) |
 | `list_labels`, `ensure_labels` | Low-level label access when needed |
@@ -44,7 +44,7 @@ Everything runs through the **Calendar Themes** connector (server name `cal-labe
    - Never give two categories near-identical colours. The neutral belongs to the default category; don't give it to a label too.
    Show the mapping in one line per category and apply it unless they object.
 6. **Apply.** Call `apply_theme` with the theme and the category → colour assignments. Leave `setMainCalendarColor` at true.
-7. **Colour their events.** Label events from the start of this week to 2 weeks ahead using the sorting rules below. Report the counts and list any events you left alone.
+7. **Colour their events.** Label events from the start of this week to 2 weeks ahead using the sorting rules below, labelling each recurring series as well as its instances in the window. Report the counts and list any events you left alone.
 8. **Other calendars (optional).** Call `list_calendars`. Offer to colour shared calendars, such as a family calendar, with a theme colour the labels don't use, so those events stand out. Use `set_calendar_color`.
 9. **Keep it coloured.** Offer a scheduled task that re-runs the sorting twice a day. Use whichever scheduling tool the session has, and call it a "scheduled task". Its prompt must stand alone, so include the person's scheme in full: category names, definitions, example patterns and the rules below. That prompt is their saved scheme, so no other storage is needed. If they keep a scheme file of their own (a markdown file in a repo, a note), point the task at that instead and treat the file as the source of truth.
 
@@ -60,7 +60,7 @@ Everything runs through the **Calendar Themes** connector (server name `cal-labe
 - **If unsure, leave it** and list it (title + date) in the summary so the person can add a tag. Never guess.
 - Skip events that already have the right label. The default category means label `""` (cleared).
 - Change only the label. Never touch times, titles, notes or attendees. `set_event_labels` sends no notifications.
-- Recurring events arrive as individual instances. Label the instances, not the series.
+- Recurring events arrive as individual instances, each with a `recurringEventId`. When all instances of a series in the window clearly belong to one category and none is `#keep`, label the series itself (`set_event_labels` with `eventId` = the `recurringEventId`) so future repeats inherit the colour. Also label any instance that is on the wrong label, because instances with their own label don't inherit from the series. If instances of a series disagree (different tags, or one is `#keep`), label only the instances.
 
 ## Changes later
 
